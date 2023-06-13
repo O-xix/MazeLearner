@@ -210,6 +210,10 @@ public class Maze {
                 }
             }
             else if (action == 1) {
+                if (binaryTree.root.left == null) {
+                    binaryTree.root.left = new Node("turn");
+                    binaryTree.root.left.left = new Node("turn left");
+                }
                 if (xdirection == 1 && ydirection == 0) {
                     xdirection = 0;
                     ydirection = -1;
@@ -226,12 +230,15 @@ public class Maze {
                     xdirection = 1;
                     ydirection = 0;
                 }
-
                 else {
                     return;
                 }
             }
             else if (action == 2) {
+                if (binaryTree.root.left == null) {
+                    binaryTree.root.left = new Node("turn");
+                    binaryTree.root.left.left = new Node("turn left");
+                }
                 if (xdirection == 1 && ydirection == 0) {
                     xdirection = 0;
                     ydirection = 1;
