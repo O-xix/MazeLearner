@@ -25,13 +25,6 @@ public class Main {
             maze.visualizeMaze(maze.maze_layout, maze.maze);
             maze.changePlayerPosition(navi_input, maze.maze_layout);
             maze.visualizePlayerSpace(maze.maze);
-            if (navi_random.nextInt(3) == 1) {
-                maze.maze.setVisible(false);
-                maze.maze.setVisible(true);
-            }
-            else {
-                continue;
-            }
         }
     }
 }

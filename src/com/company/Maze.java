@@ -18,6 +18,7 @@ public class Maze {
     DrawingPanel maze = new DrawingPanel(600, 600);
     int currentXpos = 1;
     int currentYpos = 1;
+    BinaryTree binaryTree;
     public void setupRandomMaze(String[][] maze_layout) {
         //make it empty at first
         for (int i = 0; i < maze_layout.length; i++) {
@@ -75,7 +76,7 @@ public class Maze {
             for (int j = 0; j < maze_layout[i].length; j++) {
                 current = maze_layout[i][j];
                 if (current.equals("empty")) {
-                    direction = random.nextInt(2);
+                    direction = random.nextInt(3);
                     if (direction == 0) {
                         maze_layout[i][j] = "wall";
                     }
@@ -182,5 +183,76 @@ public class Maze {
         Graphics player = panel.getGraphics();
         player.setColor(new Color(255, 0, 0));
         player.fillRect(currentXpos * 25, currentYpos * 25, 25, 25);
+    }
+
+    public void generateMazeInstructions() {
+        //assume a single POV, forward, left, right; looking down at first.
+        Random random = new Random();
+        int action;
+        int ydirection = -1;
+        int xdirection = 0;
+
+        for (int i = 0; i < (24 * 24); i++) {
+            action = random.nextInt(4);
+            if (action == 0) {
+                currentXpos += xdirection;
+                currentYpos += ydirection;
+                if (maze_layout[currentXpos][currentYpos].equals("wall")) {
+                    binaryTree.root.left = new Node("wall");
+                    currentXpos -= xdirection;
+                    currentYpos -= ydirection;
+                }
+                else if (maze_layout[currentXpos][currentYpos].equals("end")) {
+                    binaryTree.root.right = new Node("end");
+                }
+                else {
+                    return;
+                }
+            }
+            else if (action == 1) {
+                if (xdirection == 1 && ydirection == 0) {
+                    xdirection = 0;
+                    ydirection = -1;
+                }
+                else if (xdirection == 0 && ydirection == -1) {
+                    xdirection = -1;
+                    ydirection = 0;
+                }
+                else if (xdirection == -1 && ydirection == 0) {
+                    xdirection = 0;
+                    ydirection = 1;
+                }
+                else if (xdirection == 0 && ydirection == 1) {
+                    xdirection = 1;
+                    ydirection = 0;
+                }
+
+                else {
+                    return;
+                }
+            }
+            else if (action == 2) {
+                if (xdirection == 1 && ydirection == 0) {
+                    xdirection = 0;
+                    ydirection = 1;
+                }
+                else if (xdirection == 0 && ydirection == -1) {
+                    xdirection = 1;
+                    ydirection = 0;
+                }
+                else if (xdirection == -1 && ydirection == 0) {
+                    xdirection = 0;
+                    ydirection = -1;
+                }
+                else if (xdirection == 0 && ydirection == 1) {
+                    xdirection = -1;
+                    ydirection = 0;
+                }
+            }
+            else {
+                return;
+            }
+            System.exit(0);
+        }
     }
 }
